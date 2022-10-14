@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.9;
 
-import "hardhat/console.sol";
 import "./IERC20.sol";
 
 contract EarlyBird {
@@ -75,11 +74,6 @@ contract EarlyBird {
         userChallenge[user] = challenge;
         isUserChallenging[user] = true;
 
-        console.log(
-            user,
-            address(this),
-            challengeToken.allowance(user, address(this))
-        );
         challengeToken.transferFrom(
             user,
             address(this),
@@ -108,6 +102,7 @@ contract EarlyBird {
 
         userProof[user] = Proof(0, 0);
         isUserChallenging[user] = false;
+        delete userChallenge[user];
 
         emit Refund(user, challenge, challengeResult);
     }
@@ -123,12 +118,6 @@ contract EarlyBird {
 
         uint256 today = (block.timestamp / 1 days) * 1 days;
         uint256 weekday = (((today / 1 days) % 7) + 3) % 7;
-        console.log(
-            today,
-            weekday,
-            challenge.weekdays[weekday],
-            block.timestamp
-        );
         require(challenge.weekdays[weekday], "Today is not challenge day");
         require(
             today + challenge.wakeUpTimestamp - 10 minutes <= block.timestamp,
