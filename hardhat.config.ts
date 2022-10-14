@@ -11,7 +11,7 @@ const config: HardhatUserConfig = {
     },
     klaytn: {
       url: 'https://api.baobab.klaytn.net:8651',
-      accounts: ['0xabae157b7941badaa0f9c668cd354dcde70d4c94575198bd433839d0f24a43a1']
+      accounts: []
     }
   }
 };
